@@ -1,31 +1,32 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 :root {
-    --black: #1c2a39;
-    --gray: #5c6a79;
-    --purple: #4c3db2;
-  }
+  --black: #1c2a39;
+  --gray: #5c6a79;
+  --purple: #4c3db2;
+  --white: #eeedf5;
+}
 
 /* header */
-  .navbar {
-    height: 120px;
-    margin-left: 10%;
-    display: flex;
-    width: 80%;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .title {
-    font-weight: bold;
-    padding-bottom: 10px;
-  }
+.navbar {
+  height: 120px;
+  margin-left: 10%;
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+}
+.title {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
 
-  .menu,
-  .menu-icons {
+.menu,
+.menu-icons {
   list-style: none;
   display: flex;
   font-size: 20px;
@@ -62,17 +63,242 @@
   align-items: center;
   font-size: 16px;
   font-weight: bold;
-
 }
 
 /* içeriği boşsa çalışır */
-.basket-count:empty{
-    display: none;
+.basket-count:empty {
+  display: none;
 }
 
-/* slider */
 
-.slider{
-    width: 70%;
-    margin: 0 auto;
+
+/* slider */
+.slider {
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden; /* Gerekirse eklenebilir */
+}
+
+/*  products */
+
+.store {
+  width: 80%;
+  margin-left: 10%;
+}
+
+.book-card {
+  height: 400px;
+}
+
+.book-card img {
+  height: 395px;
+}
+
+.font {
+  font-family: "Open Sans", sans-serif;
+}
+
+.gray {
+  color: var(--gray);
+}
+
+.book-star-rate,
+.bi-star,
+.bi-star-fill {
+  color: var(--white);
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+
+.book-star-rate .bi-star-fill.active {
+  color: #f2c94c;
+}
+
+.book-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.old-price {
+  color: var(--gray);
+  text-decoration: line-through;
+}
+
+.btn-purple {
+  color: var(--purple);
+  background: transparent;
+  cursor: pointer;
+  border: 2px solid var(--purple);
+  font-weight: bold;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 2px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-purple:hover {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
+.filter-background{
+  width: 600px;
+  height: 900px;
+  position: absolute;
+  background-color: #edebf6;
+  left: 0;
+  z-index: -1;
+}
+
+.filter{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 650px;
+  position: absolute;
+}
+
+.filter li{
+  color: var(--gray);
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+
+}
+
+.filter li:hover{
+  color: var(--purple);
+}
+.filter li.active{
+  color: var(--purple);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
+.filter li.active::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--purple);
+  border-radius: 50%;
+  position: absolute;
+  left: -13px;
+  top: 10px;
+}
+
+
+/* basket */
+
+.basket-modal{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #5c6a7950;
+  width: 100%;
+  height: 100vh;
+  z-index: -10;
+  opacity: 0;
+  transition: all 250ms ease-in-out;
+}
+
+.basket-modal.active{
+  opacity: 1;
+  z-index: 999;
+}
+
+.basket-modal.active .basket-items{
+  width: 450px;
+}
+
+.basket-items{
+  background-color: white;
+  width: 0;
+  float: right;
+  height: 100%;
+  position: relative;
+  transition: all 250ms ease-in-out;
+
+}
+
+.basket-items .bi-x{
+  position: absolute;
+  left: 0;
+  top: 0;
+   font-size: 48px;
+   cursor: pointer;
+   color: var(--black);
+}
+
+.basket-title{
+  margin-top: 80px;
+  text-align: center;
+  color: #1c2a39;
+  font-weight: bold;
+}
+
+.basket-list{
+list-style-type: none;
+padding: 0 10px;
+margin-top: 48px;
+max-height: 700px;
+overflow-y:auto;
+}
+
+.basket-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.basket-item-info{
+  width: 250px;
+}
+
+.basket-item-info .book-name{
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.basket-item-info .book-price{
+  font-size: 16px;
+
+}
+
+.basket-item-info .book-remove{
+  cursor: pointer;
+  color: var(--black);
+}
+
+.basket-item .book-count{
+  font-size: 24px;
+  color: var(--black);
+  font-weight: bold;
+}
+
+.book-count .decrease,
+.increase{
+  cursor: pointer;
+  color: var(--purple);
+}
+
+.basket-total{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 16px;
+  align-items: center;
+  width: inherit;
+}
+
+.basket-total button{
+  width: 100%;
+  margin-top: 5px;
 }
