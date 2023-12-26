@@ -16,23 +16,23 @@ const getBooks = () => {
 getBooks();
 
 const createBookStars = (starRate) => {
-let starRateHtml = ""
-for(let i = 1; i <=5; i++){
-    if(Math.round(starRate) >= i){
-        starRateHtml += `<i class="bi bi-star-fill active"></i>`
-    }else{
-        starRateHtml += `<i class="bi bi-star-fill"></i>`   
+  let starRateHtml = "";
+  for (let i = 1; i <= 5; i++) {
+    if (Math.round(starRate) >= i) {
+      starRateHtml += `<i class="bi bi-star-fill active"></i>`;
+    } else {
+      starRateHtml += `<i class="bi bi-star-fill"></i>`;
     }
-}
-return starRateHtml; 
-}
+  }
+  return starRateHtml;
+};
 
 const createBookItemsHtml = () => {
-    const bookListEl = document.querySelector(".book-list");
-    let bookListHtml = "";
-  
-    bookList.forEach((book, index) => {
-      bookListHtml += `
+  const bookListEl = document.querySelector(".book-list");
+  let bookListHtml = "";
+
+  bookList.forEach((book, index) => {
+    bookListHtml += `
           <div class="col-5 ${index % 2 == 0 && "offset-2"} my-5">
               <div class="row book-card">
                   <div class="col-6">
@@ -45,7 +45,9 @@ const createBookItemsHtml = () => {
                   </div>
                   <div class="col-6 d-flex flex-column ">
                       <div class="book-details">
-                          <span class="font gray fs-5">${book.author}</span> <br>
+                          <span class="font gray fs-5">${
+                            book.author
+                          }</span> <br>
                           <span class="fs-4 fw-bold">${book.name}</span> <br>
                           <span class="book-star-rate">
                           ${createBookStars(book.starRate)}
@@ -71,33 +73,45 @@ const createBookItemsHtml = () => {
               </div>
           </div>
           `;
-    });
-  
-    bookListEl.innerHTML = bookListHtml;
-  };
+  });
+
+  bookListEl.innerHTML = bookListHtml;
+};
 
 const BOOK_TYPES = {
-    ALL: "Tümü",
-    NOVEL: "Roman",
-    CHILDREN: "Çocuk",
-    HISTORY: "Tarih",
-    FINANCE: "Finans",
-    SCIENCE: "Bilim",
-    SELFIMPROVEMENT: "Kişisel Gelişim",
-  };
+  ALL: "Tümü",
+  NOVEL: "Roman",
+  CHILDREN: "Çocuk",
+  HISTORY: "Tarih",
+  FINANCE: "Finans",
+  SCIENCE: "Bilim",
+  SELFIMPROVEMENT: "Kişisel Gelişim",
+};
 
-//   const createBookTypesHtml = () => {
-//     const filterEle = document.querySelector(".filter")
-//     let filterHtml = "";
-//     let filterTypes = ["ALL"];
-//     bookList.forEach(book=>{
-//         if()
+const createBookTypesHtml = () => {
+  const filterEle = document.querySelector(".filter");
+  let filterHtml = "";
+  let filterTypes = ["ALL"];
+  bookList.forEach((book) => {
+    if (filterTypes.findIndex((filter) => filter == book.type) == -1) {
+      filterTypes.push(book.type);
+    }
+  });
+  filterTypes.forEach((type, index) => {
+    filterHtml += `<li onClick="filterBooks()" data-types="${type}" class="${
+      index == 0 ? "active" : null
+    }">
+      ${BOOK_TYPES[type] || type}</li>`;
+  });
+  filterEle.innerHTML = filterHtml;
+};
 
-//     })
-//   } 
+const filterBooks = (filterEl) => {
+document.querySelector(".filter .active").classList.remove("active")
+filterEl.classList.add("active")
+let bookType = filterEl.dataset.types;
 
-
-
+}
 //datanın gelmesini bekledik
 setTimeout(() => {
   createBookItemsHtml();
