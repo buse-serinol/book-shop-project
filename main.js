@@ -1,4 +1,5 @@
-let bookList = [];
+let bookList = [],
+basketList = [];
 
 // toggle menu
 
@@ -68,7 +69,7 @@ const createBookItemsHtml = () => {
                           }
                           </span>
                         </div>
-                        <button class="btn-purple mt-2">Sepete Ekle</button>
+                        <button class="btn-purple mt-3" onClick="addBookBasket(${book.id})">Sepete Ekle</button>
                   </div>
               </div>
           </div>
@@ -98,7 +99,7 @@ const createBookTypesHtml = () => {
     }
   });
   filterTypes.forEach((type, index) => {
-    filterHtml += `<li onClick="filterBooks()" data-types="${type}" class="${
+    filterHtml += `<li onClick="filterBooks(this)" data-types="${type}" class="${
       index == 0 ? "active" : null
     }">
       ${BOOK_TYPES[type] || type}</li>`;
@@ -110,8 +111,65 @@ const filterBooks = (filterEl) => {
 document.querySelector(".filter .active").classList.remove("active")
 filterEl.classList.add("active")
 let bookType = filterEl.dataset.types;
-
+getBooks()
+if(bookType != "ALL"){
+  bookList = bookList.filter((book) => book.type == bookType)
 }
+  createBookItemsHtml();
+}
+
+const listBasketItems = () => {
+  const basketListEl =document.querySelector(".basket-list")
+  const basketCountEl =document.querySelector(".basket-count")
+  basketCountEl.innerHTML = basketList.length > 0 ? basketList.length : null;
+  let basketListHtml="";
+  let totalPrice = 0;
+  basketList.forEach((item) => {
+basketListHtml += `
+<li class="basket-item">
+                <img 
+                src="${item.product.imgSource}" 
+                alt="" 
+                width="100" 
+                height="110">
+                <div class="basket-item-info">
+                    <h3 class="book-name">${item.product.name}</h3>
+                    <span class="book-price">${item.product.price}</span> <br>
+                    <span class="book-remove">Sepetten Kaldır</span>
+                </div>
+
+                <div class="book-count">
+                    <span class="decrease">-</span>
+                    <span class="mx-2">${item.quantity}</span>
+                    <span class="increase">+</span>
+                </div>
+            </li> `
+  })
+basketListEl.innerHTML = basketListHtml
+}
+
+const addBookBasket = (bookId) => {
+ let findedBook = bookList.find((book) => book.id == bookId)
+ if (findedBook){
+const basketAlreadyIndex = basketList.findIndex(
+  (basket) => basket.product.id == bookId)
+if (basketAlreadyIndex == -1){
+  let addItem = {quantity:1, product: findedBook}
+  basketList.push(addItem)
+}else{
+  basketList[basketAlreadyIndex].quantity += 1
+}
+ }
+ listBasketItems();
+}
+
+
+
+
+
+
+
+
 //datanın gelmesini bekledik
 setTimeout(() => {
   createBookItemsHtml();
